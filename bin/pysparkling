@@ -10,6 +10,8 @@ checkSparkHome
 checkSparkVersion
 # Check sparkling water assembly Jar exists
 checkPyZipExists
+# clean python cache when running in SNAPSHOT version
+cleanPyCache
 
 PYTHONPATH=$PY_ZIP_FILE:$PYTHONPATH \
 pyspark --py-files "$PY_ZIP_FILE" "$@"

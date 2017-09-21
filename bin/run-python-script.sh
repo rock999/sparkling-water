@@ -10,6 +10,8 @@ checkSparkHome
 checkSparkVersion
 # Check sparkling water assembly Jar exists
 checkPyZipExists
+# clean python cache when running in SNAPSHOT version
+cleanPyCache
 
 SCRIPT_MASTER=${MASTER:-"$DEFAULT_MASTER"}
 SCRIPT_DEPLOY_MODE="cluster"

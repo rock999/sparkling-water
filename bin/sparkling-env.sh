@@ -55,8 +55,13 @@ MAJOR_VERSION=$(echo "$VERSION" | cut -d . -f 1,2)
 export PATCH_VERSION
 PATCH_VERSION=$(echo "$VERSION" | cut -d . -f 3)
 
-PY_ZIP="h2o_pysparkling_${MAJOR_VERSION}-${VERSION}.zip"
+export PY_ZIP="h2o_pysparkling_${MAJOR_VERSION}-${VERSION}.zip"
 export PY_ZIP_FILE="$TOPDIR/py/build/dist/$PY_ZIP"
+
+if [[ "$PY_ZIP" == *"SNAPSHOT"* ]]; then
+export PYTHON_EGG_CACHE="$(mktemp -d)"
+fi
+
 export AVAILABLE_H2O_DRIVERS
 AVAILABLE_H2O_DRIVERS=$( [ -f "$TOPDIR/h2o_drivers.txt" ] && cat "$TOPDIR/h2o_drivers.txt" || echo "N/A" )
 
@@ -78,6 +83,12 @@ if [ ! -f "$FAT_JAR_FILE" ]; then
     echo "Sparkling Water assembly jar does not exist at: $FAT_JAR_FILE. Can not continue!"
     echo
     exit -1
+fi
+}
+
+function cleanPyCache() {
+if [[ "$PY_ZIP" == *"SNAPSHOT"* ]]; then
+    rm -rf "$PYTHON_EGG_CACHE"
 fi
 }
 
